@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Games {% endblock %}</h1>
-    {% for book in books %}
-        <div class='book'>
-            <h3>#{{ book[0] }} - {{ book[1] }} BY {{ book[2] }}</h3>
-            <i><p>({{ book[3] }})</p></i>
-            <p class='review'>{{ book[4] }}</p>
-            <i><p>Added {{ book[5] }}</p></i>
-        </div>
-    {% endfor %}
+<div class='game'>
+      <h1>Games</h1>
+      <table>
+        <thead>
+          <td><b>id</b></td>
+          <td><b>player1</b></td>
+          <td><b>player2</b></td>
+        </thead>
+        <tbody>
+    {% for game in games %}
+              <tr>
+                <td>{{game[0]}}</td>
+                <td>{{game[1]}}</td>
+                <td>{{game[2]}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+      </table>
+    </div>
 {% endblock %}

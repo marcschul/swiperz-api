@@ -16,10 +16,10 @@ def index():
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute('SELECT * FROM games;')
-    books = cur.fetchall()
+    games = cur.fetchall()
     cur.close()
     conn.close()
-    return render_template('index.html', books=books)
+    return render_template('index.html', games=games)
 
 if __name__ == "__main__":
   app.run(debug=True)
