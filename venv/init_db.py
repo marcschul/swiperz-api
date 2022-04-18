@@ -26,20 +26,20 @@ cur.execute('CREATE TABLE games (id serial PRIMARY KEY,'
 
 cur.execute('INSERT INTO games (player1, player2, current_player, game_over, board)'
             'VALUES (%s, %s, %s, %s, %s)',
-            ('marc',
-             'wenyan',
+            ('Player1',
+             'Player2',
              '1',
              'true',
-             '{{0, 1, 1} , {1, 1, 1}, {0, 0, 0}}')
+             '{{0, 1, 1, 1, 0, 0, 1} , {0, 1, 1, 1, 0, 0, 1}, {0, 1, 1, 1, 0, 0, 1}, {0, 1, 1, 1, 0, 0, 1}, {0, 1, 1, 1, 0, 0, 1}, {0, 1, 1, 1, 0, 0, 1}, {0, 1, 1, 1, 0, 0, 1}}')
             )
 
 cur.execute('INSERT INTO games (player1, player2, current_player, game_over, board)'
             'VALUES (%s, %s, %s, %s, %s)',
-            ('bob',
-             'bill',
+            ('Player1',
+             'Player2',
              '2',
              'false',
-             '{{0, 0, 0} , {0, 0, 0}, {0, 0, 0}}')
+             '{{0, 0, 0, 0, 0, 0, 0} , {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}}')
             )
 
 conn.commit()
