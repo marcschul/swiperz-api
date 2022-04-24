@@ -1,4 +1,3 @@
-# import os
 import psycopg2
 
 conn = psycopg2.connect(
@@ -23,7 +22,6 @@ cur.execute('CREATE TABLE games (id serial PRIMARY KEY,'
                                  )
 
 # Insert data into the table
-
 cur.execute('INSERT INTO games (player1, player2, current_player, game_over, board)'
             'VALUES (%s, %s, %s, %s, %s)',
             ('Player1',
