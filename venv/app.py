@@ -53,7 +53,7 @@ def games():
     games = cur.fetchall()
     cur.close()
     conn.close()
-    return jsonify(games)
+    return jsonify(games[len(games) - 1])
   
   # if request.method == 'POST':
   #   data = request.json
