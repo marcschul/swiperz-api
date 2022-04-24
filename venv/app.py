@@ -71,18 +71,21 @@ def games():
     print(data)
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('INSERT INTO games (player1, player2, current_player, game_over, board)'
-            'VALUES (%s, %s, %s, %s, %s)',
+    cur.execute('INSERT INTO games (player1, player2, current_player, game_over, message, board)'
+            'VALUES (%s, %s, %s, %s, %s, %s)',
             ('Player1',
              'Player2',
-             '2',
+             '1',
              'false',
-             '{{1, 0, 0, 0, 0, 0, 0} , {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}}')
+             'SWIPERZ',
+             '{{0, 0, 0, 0, 0, 0, 0} , {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}}')
             )
     conn.commit()
+    cur.execute("SELECT * FROM games;")
+    games = cur.fetchall()
     cur.close()
     conn.close()
-    return jsonify(data)
+    return jsonify(games[len(games) - 1])
 
 if __name__ == "__main__":
   app.run(debug=True)
