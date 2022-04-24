@@ -1,3 +1,4 @@
+from email import message
 import psycopg2
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
@@ -44,7 +45,7 @@ def json():
     conn.close()
     return jsonify(games)
 
-@app.route('/games',methods=['GET','POST'])
+@app.route('/games',methods=['GET','POST', 'PUT'])
 def games():
   if request.method == 'GET':
     conn = get_db_connection()
@@ -54,17 +55,6 @@ def games():
     cur.close()
     conn.close()
     return jsonify(games[len(games) - 1])
-  
-  # if request.method == 'POST':
-  #   data = request.json
-  #   print(data)
-  #   conn = get_db_connection()
-  #   cur = conn.cursor()
-  #   cur.execute('SELECT * FROM games;')
-  #   games = cur.fetchall()
-  #   cur.close()
-  #   conn.close()
-  #   return jsonify(data)
 
   if request.method == 'POST':
     data = request.json
@@ -83,6 +73,25 @@ def games():
     conn.commit()
     cur.execute("SELECT * FROM games;")
     games = cur.fetchall()
+    cur.close()
+    conn.close()
+    return jsonify(games[len(games) - 1])
+
+  if request.method == 'PUT':
+    data = request.json
+    currentPlayer = data['appState']['currentPlayer']
+    gameOver = data['appState']['gameOver']
+    message = data['appState']['message']
+    board = data['gameState']['board']
+    print(currentPlayer)
+    print(gameOver)
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM games;")
+    games = cur.fetchall()
+    print(len(games))
+    cur.execute('UPDATE games SET current_player=(%s), game_over=(%s), message=(%s), board=(%s) WHERE id=(%s);', [currentPlayer, gameOver, message, board, len(games)])
+    conn.commit()
     cur.close()
     conn.close()
     return jsonify(games[len(games) - 1])
