@@ -1,5 +1,5 @@
 import psycopg2
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -22,8 +22,20 @@ def index():
     conn.close()
     return render_template('index.html', games=games)
 
-@app.route('/json')
+@app.route('/json',methods=['GET','POST'])
 def json():
+  if request.method == 'GET':
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM games;')
+    games = cur.fetchall()
+    cur.close()
+    conn.close()
+    return jsonify(games)
+  
+  if request.method == 'POST':
+    data = request.json
+    print(data)
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute('SELECT * FROM games;')
