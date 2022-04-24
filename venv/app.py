@@ -16,7 +16,7 @@ def get_db_connection():
 def index():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM games;')
+    cur.execute("SELECT * FROM games;")
     games = cur.fetchall()
     cur.close()
     conn.close()
@@ -43,6 +43,46 @@ def json():
     cur.close()
     conn.close()
     return jsonify(games)
+
+@app.route('/games',methods=['GET','POST'])
+def games():
+  if request.method == 'GET':
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM games;')
+    games = cur.fetchall()
+    cur.close()
+    conn.close()
+    return jsonify(games)
+  
+  # if request.method == 'POST':
+  #   data = request.json
+  #   print(data)
+  #   conn = get_db_connection()
+  #   cur = conn.cursor()
+  #   cur.execute('SELECT * FROM games;')
+  #   games = cur.fetchall()
+  #   cur.close()
+  #   conn.close()
+  #   return jsonify(data)
+
+  if request.method == 'POST':
+    data = request.json
+    print(data)
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('INSERT INTO games (player1, player2, current_player, game_over, board)'
+            'VALUES (%s, %s, %s, %s, %s)',
+            ('Player1',
+             'Player2',
+             '2',
+             'false',
+             '{{1, 0, 0, 0, 0, 0, 0} , {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}}')
+            )
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify(data)
 
 if __name__ == "__main__":
   app.run(debug=True)

@@ -42,6 +42,15 @@ cur.execute('INSERT INTO games (player1, player2, current_player, game_over, boa
              '{{0, 0, 0, 0, 0, 0, 0} , {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}}')
             )
 
+cur.execute('INSERT INTO games (player1, player2, current_player, game_over, board)'
+            'VALUES (%s, %s, %s, %s, %s)',
+            ('Player1',
+             'Player2',
+             '2',
+             'false',
+             '{{1, 0, 0, 0, 0, 0, 0} , {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}}')
+            )
+
 conn.commit()
 
 cur.close()
