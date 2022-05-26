@@ -1,15 +1,18 @@
 import psycopg2
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 CORS(app)
+load_dotenv('.env')
 
 def get_db_connection():
-    conn = psycopg2.connect(host='localhost',
-                            database='swiperz_db',
-                            user='swiperz',
-                            password='swiperz')
+    conn = psycopg2.connect(host=os.getenv("HOST"),
+                            database=os.getenv("DB"),
+                            user=os.getenv("USER"),
+                            password=os.getenv("PASSWORD"))
     return conn
 
 @app.route('/')
