@@ -9,10 +9,11 @@ CORS(app)
 load_dotenv('.env')
 
 def get_db_connection():
-    conn = psycopg2.connect(host=os.getenv("HOST"),
-                            database=os.getenv("DB"),
-                            user=os.getenv("USER"),
-                            password=os.getenv("PASSWORD"))
+    conn = psycopg2.connect(host=os.getenv("PG_HOST"),
+                            database=os.getenv("PG_DATABASE"),
+                            user=os.getenv("PG_USER"),
+                            password=os.getenv("PG_PASSWORD"),
+                            port=os.getenv("PG_PORT"))
     return conn
 
 @app.route('/')
